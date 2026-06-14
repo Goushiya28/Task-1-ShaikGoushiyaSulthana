@@ -34,7 +34,34 @@ DevTrack is a fully responsive, vanilla HTML/CSS/JavaScript task management dash
 ├── main.js          # App logic, state management, and interactivity
 └── README.md
 |__Screenshots
+
 ```
+
+## 📸 Project Screenshots
+
+### Dashboard Overview
+![Overview](Screenshots/Overview.png)
+
+### Statistics Dashboard
+![Statistics](Screenshots/Statistics.png)
+
+### Categories Section
+![Categories](Screenshots/Categories.png)
+
+### Task History
+![Task History](Screenshots/Taskhistory.png)
+
+### Upcoming Deadlines
+![Deadlines](Screenshots/Deadlines.png)
+
+### Achievement Badges
+![Badges](Screenshots/Badges-Desktop%20view.png)
+
+### Mobile Responsive View
+![Mobile View](Screenshots/Mobileview.png)
+
+### Mobile Task Table View
+![Mobile View 2](Screenshots/Mobileview2.png)
 
 ## ▶️ Running Locally
 
