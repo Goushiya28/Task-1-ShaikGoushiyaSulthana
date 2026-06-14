@@ -26,16 +26,17 @@ DevTrack is a fully responsive, vanilla HTML/CSS/JavaScript task management dash
 ## 📁 Project Structure
 
 ```
-├── DevTrack.html    # Page structure & semantic markup
+├── index.html    # Page structure & semantic markup
 ├── style.css        # Styling, layout, and responsive design
 ├── main.js          # App logic, state management, and interactivity
 └── README.md
+|__Screenshots
 ```
 
 ## ▶️ Running Locally
 
 1. Clone or download this repository.
-2. Open `DevTrack.html` in a browser (or use VS Code's Live Server extension for the best experience).
+2. Open `index.html` in a browser (or use VS Code's Live Server extension for the best experience).
 3. No build steps, dependencies, or installation required.
 
 ## 📱 Responsive Design
