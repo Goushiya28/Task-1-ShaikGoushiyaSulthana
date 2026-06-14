@@ -29,11 +29,19 @@ DevTrack is a fully responsive, vanilla HTML/CSS/JavaScript task management dash
 ## 📁 Project Structure
 
 ```
-├── index.html    # Page structure & semantic markup
-├── style.css        # Styling, layout, and responsive design
-├── main.js          # App logic, state management, and interactivity
-└── README.md
-|__Screenshots
+├── index.html
+├── style.css
+├── main.js
+├── README.md
+└── Screenshots/
+    ├── Overview.png
+    ├── Statistics.png
+    ├── Categories.png
+    ├── Taskhistory.png
+    ├── Deadlines.png
+    ├── Badges-Desktop view.png
+    ├── Mobileview.png
+    └── Mobileview2.png
 
 ```
 
