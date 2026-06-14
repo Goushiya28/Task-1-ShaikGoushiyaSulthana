@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DevTrack — Task Management</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div class="nav-overlay" id="navOverlay"></div>
+<!-- SVG Gradient defs -->
+<svg width="0" height="0" style="position:absolute">
+<defs>
+<linearGradient id="circleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+<stop offset="0%" stop-color="#00e5ff"/>
+<stop offset="100%" stop-color="#b388ff"/>
+</linearGradient>
+</defs>
+</svg>
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+<div class="sidebar-logo">
+<span class="logo-icon">⬡</span>
+<span class="logo-text">DevTrack</span>
+</div>
+<nav class="sidebar-nav">
+<a class="nav-item active" data-section="hero"        onclick="scrollToSection('hero')"><span class="nav-icon">◈</span><span>Overview</span></a>
+<a class="nav-item"        data-section="stats"       onclick="scrollToSection('stats')"><span class="nav-icon">◉</span><span>Statistics</span></a>
+<a class="nav-item"        data-section="categories"  onclick="scrollToSection('categories')"><span class="nav-icon">◧</span><span>Categories</span></a>
+<a class="nav-item"        data-section="productivity"onclick="scrollToSection('productivity')"><span class="nav-icon">◎</span><span>Productivity</span></a>
+<a class="nav-item"        data-section="tasks"       onclick="scrollToSection('tasks')"><span class="nav-icon">▣</span><span>Task History</span></a>
+<a class="nav-item"        data-section="analytics"   onclick="scrollToSection('analytics')"><span class="nav-icon">◬</span><span>Analytics</span></a>
+<a class="nav-item"        data-section="deadlines"   onclick="scrollToSection('deadlines')"><span class="nav-icon">◷</span><span>Deadlines</span></a>
+<a class="nav-item"        data-section="badges"      onclick="scrollToSection('badges')"><span class="nav-icon">◈</span><span>Badges</span></a>
+</nav>
+<footer class="sidebar-footer">
+<div class="user-chip">
+<div class="user-avatar">G</div>
+<div class="user-info">
+<span class="user-name">Goushiya</span>
+<span class="user-role">Task Manager</span>
+</div>
+<span class="user-status"></span>
+</div>
+</footer>
+</aside>
+<!-- MOBILE HEADER -->
+<header class="mobile-header">
+<button class="hamburger" id="hamburger" aria-label="Open menu">
+<span></span><span></span><span></span>
+</button>
+<span class="mobile-logo">⬡ DevTrack</span>
+<button class="btn-primary-sm" onclick="openTaskModal()">+ Task</button>
+</header>
+<!-- MAIN -->
+<main class="main-content">
+<div class="grid-bg" aria-hidden="true"></div>
+<!-- HERO -->
+<section id="hero" class="hero-section reveal">
+<div class="hero-badge"><span class="pulse-dot"></span> Dashboard Active</div>
+<h1 class="hero-title">Dev<span class="accent-text">Track</span></h1>
+<p class="hero-subtitle">Your personal productivity command center. Create tasks, track progress, earn badges.</p>
+<div class="hero-actions">
+<button class="btn-primary" onclick="openTaskModal()">
+Create Task <span class="btn-arrow">→</span>
+</button>
+<button class="btn-ghost" onclick="scrollToSection('tasks')">
+View All Tasks
+</button>
+</div>
+<div class="hero-meta" id="heroMeta">
+<span class="meta-item"><span class="meta-dot green"></span><span id="metaTotal">0 tasks total</span></span>
+<span class="meta-sep">/</span>
+<span class="meta-item"><span class="meta-dot cyan"></span><span id="metaCompleted">0 completed</span></span>
+<span class="meta-sep">/</span>
+<span class="meta-item"><span class="meta-dot rose"></span><span id="metaOverdue">0 overdue</span></span>
+</div>
+</section>
+<!-- STATS -->
+<section id="stats" class="section reveal">
+<div class="section-header">
+<h2 class="section-title"><span class="section-num">01</span> Statistics</h2>
+<span class="section-tag" id="statsTag">All time</span>
+</div>
+<div class="stats-grid">
+<div class="stat-card">
+<div class="stat-icon">📋</div>
+<div class="stat-value" id="statTotal">0</div>
+<div class="stat-label">Total Tasks</div>
+<div class="stat-change neutral" id="statTotalChange">No tasks yet</div>
+<div class="stat-bar"><div class="stat-bar-fill" id="statTotalBar" style="width:0%"></div></div>
+</div>
+<div class="stat-card">
+<div class="stat-icon">✅</div>
+<div class="stat-value" id="statCompleted">0</div>
+<div class="stat-label">Completed</div>
+<div class="stat-change positive" id="statCompletedChange">—</div>
+<div class="stat-bar"><div class="stat-bar-fill green" id="statCompletedBar" style="width:0%"></div></div>
+</div>
+<div class="stat-card">
+<div class="stat-icon">⏳</div>
+<div class="stat-value" id="statPending">0</div>
+<div class="stat-label">Pending</div>
+<div class="stat-change warning" id="statPendingChange">—</div>
+<div class="stat-bar"><div class="stat-bar-fill amber" id="statPendingBar" style="width:0%"></div></div>
+</div>
+<div class="stat-card">
+<div class="stat-icon">🔴</div>
+<div class="stat-value" id="statOverdue">0</div>
+<div class="stat-label">Overdue</div>
+<div class="stat-change danger" id="statOverdueChange">—</div>
+<div class="stat-bar"><div class="stat-bar-fill rose" id="statOverdueBar" style="width:0%"></div></div>
+</div>
+</div>
+</section>
+<!-- TASK CATEGORIES -->
+<section id="categories" class="section reveal">
+<div class="section-header">
+<h2 class="section-title"><span class="section-num">02</span> Task Categories</h2>
+<span class="section-tag" id="catSectionTag">0 categories</span>
+</div>
+<div class="cat-grid" id="catGrid">
+<div class="empty-state">
+<div class="empty-icon">◧</div>
+<div class="empty-title">No categories yet</div>
+<div class="empty-desc">Create tasks with categories to see progress here.</div>
+</div>
+</div>
+</section>
+<!-- PRODUCTIVITY SCORE -->
+<section id="productivity" class="section reveal">
+<div class="section-header">
+<h2 class="section-title"><span class="section-num">03</span> Productivity Score</h2>
+<span class="section-tag">Completion rate</span>
+</div>
+<div class="productivity-layout">
+<div class="productivity-circle-wrap">
+<div class="productivity-circle">
+<svg class="circle-svg" viewBox="0 0 200 200">
+<circle class="circle-bg" cx="100" cy="100" r="84" />
+<circle class="circle-progress" cx="100" cy="100" r="84" id="productivityCircle" />
+<text class="circle-score" x="100" y="96" text-anchor="middle" dominant-baseline="middle" id="productivityScore">0</text>
+<text class="circle-label-svg" x="100" y="122" text-anchor="middle">%</text>
+</svg>
+<div class="productivity-status" id="productivityStatus">No tasks yet</div>
+</div>
+</div>
+<div class="productivity-breakdown" id="productivityBreakdown">
+<div class="empty-state" style="padding:24px 0; text-align:left;">
+<div class="empty-title">Add tasks to see a breakdown</div>
+<div class="empty-desc">Your productivity score is calculated from task completion percentage. Per-priority and per-status breakdowns will appear here once you have tasks.</div>
+</div>
+<div class="productivity-levels">
+<div class="level-badge inactive" id="lvlBeginner">Getting Started</div>
+<div class="level-badge inactive" id="lvlIntermediate">In Progress</div>
+<div class="level-badge upcoming" id="lvlMaster">High Performer</div>
+</div>
+</div>
+</div>
+</section>
+<!-- TASK HISTORY -->
+<section id="tasks" class="section reveal">
+<div class="section-header">
+<h2 class="section-title"><span class="section-num">04</span> Task History</h2>
+<span class="section-tag" id="taskSectionTag">0 tasks</span>
+</div>
+<div class="log-controls">
+<div class="search-wrap">
+<span class="search-icon">⌕</span>
+<input type="text" class="search-input" id="taskSearch" placeholder="Search tasks..." />
+</div>
+<div class="filter-tabs" id="statusFilterTabs">
+<button class="filter-tab active" data-filter="all">All</button>
+<button class="filter-tab" data-filter="Pending">Pending</button>
+<button class="filter-tab" data-filter="In Progress">In Progress</button>
+<button class="filter-tab" data-filter="Completed">Completed</button>
+<button class="filter-tab" data-filter="Overdue">Overdue</button>
+</div>
+<select class="filter-select" id="categoryFilter">
+<option value="all">All Categories</option>
+</select>
+<select class="filter-select" id="priorityFilter">
+<option value="all">All Priorities</option>
+<option value="High">High</option>
+<option value="Medium">Medium</option>
+<option value="Low">Low</option>
+</select>
+<button class="btn-primary-sm" onclick="openTaskModal()" style="white-space:nowrap">+ New Task</button>
+</div>
+<div class="table-wrap">
+<table class="task-table">
+<thead>
+<tr>
+<th>#</th>
+<th>Task</th>
+<th>Category</th>
+<th>Priority</th>
+<th>Due Date</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+<tbody id="taskTableBody"></tbody>
+</table>
+</div>
+<div class="table-pagination">
+<button class="page-btn" id="prevPage">← Prev</button>
+<span class="page-info" id="pageInfo">Page 0 of 0</span>
+<button class="page-btn" id="nextPage">Next →</button>
+</div>
+</section>
+<!-- ANALYTICS -->
+<section id="analytics" class="section reveal">
+<div class="section-header">
+<h2 class="section-title"><span class="section-num">05</span> Task Analytics</h2>
+<span class="section-tag">Last 7 days</span>
+</div>
+<div class="analytics-layout">
+<div class="chart-container">
+<div class="chart-legend">
+<span class="legend-item"><span class="legend-dot cyan"></span>Created</span>
+<span class="legend-item"><span class="legend-dot green"></span>Completed</span>
+</div>
+<div class="chart-area" id="chartArea"></div>
+<div class="chart-labels" id="chartLabels"></div>
+</div>
+<div class="analytics-sidebar">
+<div class="analytics-stat">
+<span class="as-label">Completion Rate</span>
+<span class="as-value" id="asCompletionRate">0%</span>
+<span class="as-sub">all time</span>
+</div>
+<div class="analytics-stat">
+<span class="as-label">Most Active</span>
+<span class="as-value" id="asMostActive">—</span>
+<span class="as-sub">category</span>
+</div>
+<div class="analytics-stat">
+<span class="as-label">High Priority</span>
+<span class="as-value" id="asHighPriority">0</span>
+<span class="as-sub">tasks pending</span>
+</div>
+<div class="analytics-stat">
+<span class="as-label">Due This Week</span>
+<span class="as-value" id="asDueThisWeek">0</span>
+<span class="as-sub">tasks</span>
+</div>
+</div>
+</div>
+</section>
+<!-- UPCOMING DEADLINES -->
+<section id="deadlines" class="section reveal">
+<div class="section-header">
+<h2 class="section-title"><span class="section-num">06</span> Upcoming Deadlines</h2>
+<span class="section-tag" id="deadlineTag">From task due dates</span>
+</div>
+<div class="deadlines-grid" id="deadlinesGrid">
+<div class="empty-state">
+<div class="empty-icon">◷</div>
+<div class="empty-title">No upcoming deadlines</div>
+<div class="empty-desc">Tasks with due dates will appear here. Create a task to get started.</div>
+<button class="btn-primary-sm" onclick="openTaskModal()">Create Task</button>
+</div>
+</div>
+</section>
+<!-- BADGES -->
+<section id="badges" class="section reveal">
+<div class="section-header">
+<h2 class="section-title"><span class="section-num">07</span> Achievement Badges</h2>
+<span class="section-tag" id="badgeSectionTag">0 / 5 earned</span>
+</div>
+<div class="badges-grid" id="badgesGrid"></div>
+</section>
+<footer class="page-footer">
+
+<span class="page-footer-sep">/</span>
+<span>DecodeLabs Internship · Project 1</span>
+</footer>
+</main>
+<!-- TASK MODAL -->
+<div class="modal-overlay" id="taskModal">
+<div class="modal">
+<div class="modal-header">
+<span class="modal-title" id="modalTitle">Create Task</span>
+<button class="modal-close" onclick="closeTaskModal()">✕</button>
+</div>
+<div class="form-grid">
+<div class="form-group">
+<label class="form-label">Task Title *</label>
+<input type="text" class="form-input" id="taskTitle" placeholder="What needs to be done?" maxlength="120" />
+</div>
+<div class="form-group">
+<label class="form-label">Description</label>
+<textarea class="form-textarea" id="taskDesc" placeholder="Optional details..." maxlength="500"></textarea>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label class="form-label">Category *</label>
+<input type="text" class="form-input" id="taskCategory" placeholder="e.g. Frontend, Backend..." maxlength="40" list="categoryList" />
+<datalist id="categoryList"></datalist>
+</div>
+<div class="form-group">
+<label class="form-label">Priority *</label>
+<select class="form-select" id="taskPriority">
+<option value="">Select priority</option>
+<option value="Low">Low</option>
+<option value="Medium">Medium</option>
+<option value="High">High</option>
+</select>
+</div>
+</div>
+<div class="form-row">
+<div class="form-group">
+<label class="form-label">Due Date</label>
+<input type="date" class="form-input" id="taskDueDate" style="color-scheme:dark" />
+</div>
+<div class="form-group">
+<label class="form-label">Status *</label>
+<select class="form-select" id="taskStatus">
+<option value="">Select status</option>
+<option value="Pending">Pending</option>
+<option value="In Progress">In Progress</option>
+<option value="Completed">Completed</option>
+</select>
+</div>
+</div>
+<div class="form-actions">
+<button class="btn-ghost-sm" onclick="closeTaskModal()">Cancel</button>
+<button class="btn-primary-sm" onclick="saveTask()">Save Task</button>
+</div>
+</div>
+</div>
+</div>
+<!-- CONFIRM DELETE -->
+<div class="confirm-overlay" id="confirmOverlay">
+<div class="confirm-box">
+<div class="confirm-title">Delete Task?</div>
+<div class="confirm-desc">This action cannot be undone. The task and all associated data will be permanently removed.</div>
+<div class="confirm-actions">
+<button class="btn-ghost-sm" onclick="closeConfirm()">Cancel</button>
+<button class="btn-danger-sm" id="confirmDeleteBtn">Delete</button>
+</div>
+</div>
+</div>
+<!-- TOAST CONTAINER -->
+<div class="toast-container" id="toastContainer"></div>
+<script src="main.js"></script>
+</body>
+</html>
